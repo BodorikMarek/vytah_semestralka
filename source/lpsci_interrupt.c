@@ -143,7 +143,6 @@ int main(void)
     	if(messageIsComplete == true){
     		sendAck();
     		messageIsComplete = false;
-    		printf("git test");
     	}
 
     }
