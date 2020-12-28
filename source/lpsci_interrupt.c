@@ -53,9 +53,8 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile uint8_t message[265], index = 0;
-volatile uint8_t dataForCRC[3];
-volatile bool messageIsComplete = false;
+volatile uint8_t message[265], index = 0, led1, led2, limitSwitch;
+volatile bool messageIsComplete = false, dontSlowDown = false;
 
 
 uint8_t g_tipString[] =
@@ -79,20 +78,13 @@ volatile uint16_t rxIndex; /* Index of the memory to save new arrived data. */
 void DEMO_LPSCI_IRQHandler(void)
 {
 	if ((kLPSCI_RxDataRegFullFlag) & LPSCI_GetStatusFlags(DEMO_LPSCI)) {
-				message[index] = LPSCI_ReadByte(DEMO_LPSCI);
-				if (message[index] == 0xA1) return;
-				if (index == 3 && message[3] != 0) {
-					index++;
-					for (int i = 0; i < message[3]; i++) message[index] = LPSCI_ReadByte(DEMO_LPSCI);
-				}
-				if(index == message[3] + 4){
-					messageIsComplete = true;
-					index = 0;
-					return;
-				}
-				index++;
+	                message[index] = LPSCI_ReadByte(DEMO_LPSCI);
 
-	}
+	                if(index == (message[3] + 4)){
+	                	messageIsComplete = true;
+	                }
+	                index++;
+	    }
 }
 
 unsigned char crc8(const unsigned char * data, const unsigned int size)
@@ -112,11 +104,60 @@ unsigned char crc8(const unsigned char * data, const unsigned int size)
     return crc;
 }
 
+void delay(int millis) {
+	for(long i = 0; i < millis * 10000; i++) __asm("nop");
+}
+
 
 void sendAck() {
 	uint8_t crcAck[] = {message[2], 0x00};
 	uint8_t ackPacket[] = {0xA1, message[2], 0x00, 0x00, crc8(crcAck, sizeof(crcAck))};
 	LPSCI_WriteBlocking(DEMO_LPSCI, ackPacket, sizeof(ackPacket));
+}
+
+void closeDoor(void) {
+	uint8_t msg[] = {0xA0, 0xf0, 0x00, 0x01, 0x01, 0xd3};
+	LPSCI_WriteBlocking(DEMO_LPSCI, msg, sizeof(msg));
+}
+
+
+
+void motorDown() {
+	uint8_t move_down[] = {0xA0, 0xf1 , 0x00, 0x05, 0x02, 0x9C, 0xFF, 0xFF, 0xFF, 0x6F};
+	LPSCI_WriteBlocking(DEMO_LPSCI, move_down, sizeof(move_down));
+}
+
+void stopMotor() {
+	uint8_t msg[] = {0xa0, 0xf1, 0x00, 0x01, 0x01, 0x78}; 	// STOP
+	LPSCI_WriteBlocking(DEMO_LPSCI, msg, sizeof(msg));
+}
+
+void processMessage() {
+
+}
+
+void getInfoFromButtons() {
+	if(message[2] == 0xc4 || message[2] == 0xb4){
+		led1 = 0x14;
+		led2 = 0x24;
+		limitSwitch = 0xe4;
+	}else if(message[2] == 0xc3 || message[2] == 0xb3){
+		led1 = 0x13;
+		led2 = 0x23;
+		limitSwitch = 0xe3;
+	}else if(message[2] == 0xc2 || message[2] == 0xb2){
+		led1 = 0x12;
+		led2 = 0x22;
+		limitSwitch = 0xe2;
+	}else if(message[2] == 0xc1 || message[2] == 0xb1){
+		led1 = 0x11;
+		led2 = 0x21;
+		limitSwitch = 0xe1;
+	}else if(message[2] == 0xc0 || message[2] == 0xb0){
+		led1 = 0x10;
+		led2 = 0x20;
+		limitSwitch = 0xe0;
+	}
 }
 
 int main(void)
@@ -139,10 +180,20 @@ int main(void)
     /* Enable RX interrupt. */
     LPSCI_EnableInterrupts(DEMO_LPSCI, kLPSCI_RxDataRegFullInterruptEnable);
     EnableIRQ(DEMO_LPSCI_IRQn);
+
     while(true) {
     	if(messageIsComplete == true){
-    		sendAck();
+    		if(message[0] != 0xA1) {
+    				sendAck();
+    				delay(25);
+    				processMessage();
+    				index = 0;
+    				messageIsComplete = false;
+
+    		}
+    		index = 0;
     		messageIsComplete = false;
+
     	}
 
     }
