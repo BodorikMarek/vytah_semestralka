@@ -40,6 +40,8 @@
 #define DEMO_LPSCI_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
 #define DEMO_LPSCI_IRQn UART0_IRQn
 #define DEMO_LPSCI_IRQHandler UART0_IRQHandler
+#define ON 0x01
+#define OFF 0x00
 
 /*! @brief Ring buffer size (Unit: Byte). */
 #define DEMO_RING_BUFFER_SIZE 16
@@ -53,8 +55,8 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile uint8_t message[265], index = 0, led1, led2, limitSwitch;
-volatile bool messageIsComplete = false, dontSlowDown = false;
+volatile uint8_t message[265], index = 0, led1, led2, limitSwitch = 0xe0, lastKnownLimitSwitch, currentFloor, direction = 0x02;
+volatile bool messageIsComplete = false;
 
 
 uint8_t g_tipString[] =
@@ -120,6 +122,15 @@ void closeDoor(void) {
 	LPSCI_WriteBlocking(DEMO_LPSCI, msg, sizeof(msg));
 }
 
+void openDoor() {
+	uint8_t msg[] = {0xA0, 0xF0, 0x00, 0x01, 0x00, 0x8D};
+	LPSCI_WriteBlocking(DEMO_LPSCI, msg, sizeof(msg));
+}
+
+void motorUp(void) {
+	uint8_t move_up[] = {0xA0, 0xf1 , 0x00,0x05, 0x02, 0x64, 0x00, 0x00, 0x00, 0x64};
+	LPSCI_WriteBlocking(DEMO_LPSCI, move_up, sizeof(move_up));
+}
 
 
 void motorDown() {
@@ -128,12 +139,64 @@ void motorDown() {
 }
 
 void stopMotor() {
-	uint8_t msg[] = {0xa0, 0xf1, 0x00, 0x01, 0x01, 0x78}; 	// STOP
+	uint8_t msg[] = {0xa0, 0xf1, 0x00, 0x01, 0x01, 0x78};
+	LPSCI_WriteBlocking(DEMO_LPSCI, msg, sizeof(msg));
+}
+
+void ledOnOff(uint8_t led,uint8_t status){
+	uint8_t crc[] = {led, 0x00, status};
+	uint8_t msg[] = {0xA0, led, 0x00, 0x01, status, crc8(crc, sizeof(crc))};
+	LPSCI_WriteBlocking(DEMO_LPSCI, msg, sizeof(msg));
+}
+
+void sendFloorToDisplay() {
+	uint8_t crc[] = {0x30, 0x00, direction, currentFloor};
+	uint8_t msg[] = {0xA0, 0x30, 0x00, 0x02, direction, currentFloor, crc8(crc, sizeof(crc))};
 	LPSCI_WriteBlocking(DEMO_LPSCI, msg, sizeof(msg));
 }
 
 void processMessage() {
+	if ((message[2] >= 0xc0 && message[2] <= 0xc4) || (message[2] >= 0xb0 && message[2] <= 0xb4)) {
+		getInfoFromButtons();
+		ledOnOff(led1, ON);
+		delay(5);
+		ledOnOff(led2, ON);
+		delay(5);
+		closeDoor();
+		delay(340);
+		if (lastKnownLimitSwitch == limitSwitch) return;
+		if(lastKnownLimitSwitch > limitSwitch){
+			motorDown();
+			direction = 0x02;
+			delay(5);
+			sendFloorToDisplay();
+		} else {
+			motorUp();
+			direction = 0x01;
+			delay(5);
+			sendFloorToDisplay();
 
+		}
+
+	}
+
+	if (message[2] >= 0xe0 && message[2] <= 0xe4) {
+			lastKnownLimitSwitch = message[2];
+			currentFloor = message[2] - 0xB0;
+			sendFloorToDisplay();
+	}
+
+	if(message[2] == limitSwitch){
+		stopMotor();
+		direction = 0x00;
+		delay(500);
+		openDoor();
+		ledOnOff(led1, OFF);
+		delay(5);
+		ledOnOff(led2, OFF);
+		delay(5);
+		sendFloorToDisplay();
+	}
 }
 
 void getInfoFromButtons() {
@@ -158,7 +221,11 @@ void getInfoFromButtons() {
 		led2 = 0x20;
 		limitSwitch = 0xe0;
 	}
+
+
 }
+
+
 
 int main(void)
 {
@@ -180,7 +247,9 @@ int main(void)
     /* Enable RX interrupt. */
     LPSCI_EnableInterrupts(DEMO_LPSCI, kLPSCI_RxDataRegFullInterruptEnable);
     EnableIRQ(DEMO_LPSCI_IRQn);
-
+    closeDoor();
+    delay(120);
+    motorDown();
     while(true) {
     	if(messageIsComplete == true){
     		if(message[0] != 0xA1) {
