@@ -19,13 +19,25 @@
 #define displayAddress 0x30
 #define dataMessage 0xa0
 #define ackMessage 0xa1
+#define led0 0x10
+#define led1 0x11
+#define led2 0x12
+#define led3 0x13
+#define led4 0x14
+#define ledCab0 0x20
+#define ledCab1 0x21
+#define ledCab2 0x22
+#define ledCab3 0x23
+#define ledCab4 0x24
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile uint8_t message[20], index = 0, led = 0x10, stopLimitSwitch = 0xe0,
+volatile uint8_t message[20], index = 0, led = 0x10, destinationSwitch = 0xe0,
 		lastKnownLimitSwitch, currentFloor, direction = 0x02;
-volatile bool messageIsComplete = false, isMoving = false;
+destinationSwitchTmp;
+volatile bool messageIsComplete = false, isMoving = false, isDoorClose = false;
+volatile bool floors[5] = { true, false, false, false, false };
 
 /*******************************************************************************
  * Code
@@ -58,7 +70,8 @@ unsigned char crc8(const unsigned char *data, const unsigned int size) {
 }
 
 void delay(int millis) {
-	for (long i = 0; i < millis * 10000; i++) __asm("nop");
+	for (long i = 0; i < millis * 10000; i++)
+		__asm("nop");
 }
 
 void sendAck(uint8_t reciverAddress) {
@@ -117,42 +130,169 @@ void sendFloorToDisplay() {
 	LPSCI_WriteBlocking(DEMO_LPSCI, msg, sizeof(msg));
 }
 
+uint8_t minFloorFind() {
+	if (direction == 0x02) {
+		if (destinationSwitchTmp > destinationSwitch) {
+			return;
+		} else {
+			destinationSwitch = destinationSwitchTmp;
+		}
+	}
+
+	if (direction == 0x01) {
+		if (destinationSwitchTmp < destinationSwitch) {
+			return;
+		} else {
+			destinationSwitch = destinationSwitchTmp;
+		}
+	}
+	if (direction == 0x00)
+		destinationSwitch = destinationSwitchTmp;
+}
+
+void floorsAndLedsFalse(uint8_t floor) {
+	if (floor == 0xe4) {
+		floors[4] = false;
+		delay(5);
+		ledOnOff(led4, OFF);
+		delay(15);
+		ledOnOff(ledCab4, OFF);
+	}
+
+	if (floor == 0xe3) {
+		floors[3] = false;
+		delay(5);
+		ledOnOff(led3, OFF);
+		delay(15);
+		ledOnOff(ledCab3, OFF);
+	}
+
+	if (floor == 0xe2) {
+		floors[2] = false;
+		delay(5);
+		ledOnOff(led2, OFF);
+		delay(15);
+		ledOnOff(ledCab2, OFF);
+	}
+
+	if (floor == 0xe1) {
+		floors[1] = false;
+		delay(5);
+		ledOnOff(led1, OFF);
+		delay(15);
+		ledOnOff(ledCab1, OFF);
+	}
+
+	if (floor == 0xe0) {
+		floors[0] = false;
+		delay(5);
+		ledOnOff(led0, OFF);
+		delay(15);
+		ledOnOff(ledCab0, OFF);
+	}
+
+}
+void checkForStop(uint8_t floorForStop) {
+	switch (floorForStop) {
+	case 0xe3:
+		if (floors[3] == true) {
+			stopAndGoCabineProcedure();
+
+		}
+		break;
+
+	case 0xe2:
+		if (floors[2] == true) {
+			stopAndGoCabineProcedure();
+
+		}
+		break;
+
+	case 0xe1:
+		if (floors[1] == true) {
+			stopAndGoCabineProcedure();
+		}
+
+		break;
+	}
+}
+
+void stopAndGoCabineProcedure() {
+	delay(5);
+	stopMotor();
+	uint8_t directionTmp = direction;
+	direction = 0x00;
+	delay(500);
+	openDoor();
+	floorsAndLedsFalse(lastKnownLimitSwitch);
+	isDoorClose = false;
+	delay(5);
+	sendFloorToDisplay();
+	delay(1000);
+	closeDoor();
+	delay(50);
+	direction = directionTmp;
+
+	if (direction == 0x02) {
+		motorDown();
+		delay(5);
+		sendFloorToDisplay();
+	} else {
+		motorUp();
+		delay(5);
+		sendFloorToDisplay();
+	}
+}
+
+void stopCabineProcedure() {
+	stopMotor();
+	direction = 0x00;
+	delay(500);
+	floorsAndLedsFalse(message[2]);
+	openDoor();
+	isDoorClose = false;
+	delay(5);
+	sendFloorToDisplay();
+	isMoving = false;
+}
+
+
+
 void processMessage() {
 	if (isMoving == true) {
-		if (message[2] == stopLimitSwitch) {
-			stopMotor();
-			direction = 0x00;
-			delay(500);
-			openDoor();
-			ledOnOff(led, OFF);
-			delay(5);
-			sendFloorToDisplay();
-			isMoving = false;
+		if (message[2] == destinationSwitch) {
+			stopCabineProcedure();
 		}
 
 		if (message[2] >= 0xe0 && message[2] <= 0xe4) {
 			lastKnownLimitSwitch = message[2];
 			currentFloor = message[2] - 0xB0;
 			sendFloorToDisplay();
+			checkForStop(message[2]);
 		}
 
 		if ((message[2] >= 0xc0 && message[2] <= 0xc4)
 				|| (message[2] >= 0xb0 && message[2] <= 0xb4)) {
 			getInfoFromButtons(message[2]);
 			ledOnOff(led, ON);
-			//spracovanie poradia//
+			minFloorFind();
 		}
 	} else {
 		if ((message[2] >= 0xc0 && message[2] <= 0xc4)
 				|| (message[2] >= 0xb0 && message[2] <= 0xb4)) {
 			getInfoFromButtons(message[2]);
+			minFloorFind();
+			if (lastKnownLimitSwitch == destinationSwitch)
+				return;
+
 			ledOnOff(led, ON);
 			delay(5);
-			closeDoor();
-			delay(340);
-			if (lastKnownLimitSwitch == stopLimitSwitch)
-				return;
-			if (lastKnownLimitSwitch > stopLimitSwitch) {
+
+			if (isDoorClose == false) {
+				closeDoor();
+				delay(340);
+			}
+			if (lastKnownLimitSwitch > destinationSwitch) {
 				motorDown();
 				direction = 0x02;
 				delay(5);
@@ -175,45 +315,56 @@ void getInfoFromButtons(uint8_t button) {
 	switch (button) {
 	case 0xc4:
 		led = 0x14;
-		stopLimitSwitch = 0xe4;
+		floors[4] = true;
+		destinationSwitchTmp = 0xe4;
 		break;
 	case 0xb4:
 		led = 0x24;
-		stopLimitSwitch = 0xe4;
+		floors[4] = true;
+		destinationSwitchTmp = 0xe4;
 		break;
 	case 0xc3:
 		led = 0x13;
-		stopLimitSwitch = 0xe3;
+		floors[3] = true;
+		destinationSwitchTmp = 0xe3;
 		break;
 	case 0xb3:
 		led = 0x23;
-		stopLimitSwitch = 0xe3;
+		floors[3] = true;
+		destinationSwitchTmp = 0xe3;
 		break;
 	case 0xc2:
 		led = 0x12;
-		stopLimitSwitch = 0xe2;
+		floors[2] = true;
+		destinationSwitchTmp = 0xe2;
 		break;
 	case 0xb2:
 		led = 0x22;
-		stopLimitSwitch = 0xe2;
+		floors[2] = true;
+		destinationSwitchTmp = 0xe2;
 		break;
 	case 0xc1:
 		led = 0x11;
-		stopLimitSwitch = 0xe1;
+		floors[1] = true;
+		destinationSwitchTmp = 0xe1;
 		break;
 	case 0xb1:
 		led = 0x21;
-		stopLimitSwitch = 0xe1;
+		floors[1] = true;
+		destinationSwitchTmp = 0xe1;
 		break;
 	case 0xc0:
 		led = 0x10;
-		stopLimitSwitch = 0xe0;
+		floors[0] = true;
+		destinationSwitchTmp = 0xe0;
 		break;
 	case 0xb0:
 		led = 0x20;
-		stopLimitSwitch = 0xe0;
+		floors[0] = true;
+		destinationSwitchTmp = 0xe0;
 		break;
 	}
+
 }
 
 int main(void) {
@@ -235,13 +386,14 @@ int main(void) {
 	LPSCI_EnableInterrupts(DEMO_LPSCI, kLPSCI_RxDataRegFullInterruptEnable);
 	EnableIRQ(DEMO_LPSCI_IRQn);
 
-	// Zavola vytah na spodne poschodie 0xe0 - limit switch
+// Zavola vytah na spodne poschodie 0xe0 - limit switch
 	closeDoor();
 	delay(120);
 	motorDown();
 	isMoving = true;
+	isDoorClose = true;
 
-	// Nekonecna slucka na posielanie a prijimanie sprav
+// Nekonecna slucka na posielanie a prijimanie sprav
 	while (true) {
 		if (messageIsComplete == true) {
 			if (message[0] != ackMessage) {
@@ -260,3 +412,8 @@ int main(void) {
 	}
 
 }
+
+
+/* TODO:
+ * urobit delay v odosielanej sprave
+ */
