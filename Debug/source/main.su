@@ -1,0 +1,11 @@
+core_cm0plus.h:745:22:NVIC_EnableIRQ	16	static
+fsl_clock.h:620:20:CLOCK_SetLpsci0Clock	16	static
+fsl_common.h:212:20:EnableIRQ	16	static
+fsl_lpsci.h:516:23:LPSCI_ReadByte	16	static
+main.c:9:6:UART0_IRQHandler	16	static
+main.c:20:15:crc8	40	static
+main.c:35:6:delay	24	static
+main.c:40:6:sendAck	40	static
+main.c:48:6:checkForStop	16	static
+main.c:72:6:processMessage	8	static
+main.c:124:5:main	16	static

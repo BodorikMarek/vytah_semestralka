@@ -1,0 +1,2 @@
+door.c:10:6:closeDoor	24	static
+door.c:17:6:openDoor	24	static

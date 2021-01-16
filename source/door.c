@@ -1,0 +1,23 @@
+/*
+ * door.c
+ *
+ *  Created on: 16. 1. 2021
+ *      Author: bodor
+ */
+
+#include <door.h>
+
+void closeDoor(void) {
+	uint8_t crc[] = { doorAddress, myAddress, 0x01 };
+	uint8_t msg[] = { dataMessage, doorAddress, myAddress, 0x01, 0x01, crc8(
+			crc, sizeof(crc)) };
+	LPSCI_WriteBlocking(DEMO_LPSCI, msg, sizeof(msg));
+}
+
+void openDoor() {
+	uint8_t crc[] = { doorAddress, myAddress, 0x00 };
+	uint8_t msg[] = { dataMessage, doorAddress, myAddress, 0x01, 0x00, crc8(
+			crc, sizeof(crc)) };
+	LPSCI_WriteBlocking(DEMO_LPSCI, msg, sizeof(msg));
+}
+

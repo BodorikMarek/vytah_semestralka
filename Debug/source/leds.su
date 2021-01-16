@@ -1,0 +1,5 @@
+leds.c:11:6:ledOnOff	40	static
+leds.c:18:6:minFloorFind	8	static
+leds.c:38:6:floorsAndLedsFalse	16	static
+leds.c:81:6:getInfoFromButtons	16	static
+leds.c:137:6:sendFloorToDisplay	24	static
