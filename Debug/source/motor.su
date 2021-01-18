@@ -1,5 +1,5 @@
-motor.c:9:6:stopAndGoCabineProcedure	16	static
-motor.c:36:6:stopCabineProcedure	8	static
-motor.c:48:6:motorUp	32	static
-motor.c:55:6:motorDown	32	static
-motor.c:62:6:stopMotor	24	static
+motor.c:10:6:stopAndGoCabineProcedure	16	static
+motor.c:37:6:stopCabineProcedure	8	static
+motor.c:49:6:motorUp	32	static
+motor.c:56:6:motorDown	32	static
+motor.c:63:6:stopMotor	24	static

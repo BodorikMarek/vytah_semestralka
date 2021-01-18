@@ -1,0 +1,87 @@
+\hypertarget{definitions_8h}{}\doxysection{definitions.\+h File Reference}
+\label{definitions_8h}\index{definitions.h@{definitions.h}}
+
+
+Hlavičkový súbor s definovanými hodnotami.  
+
+
+{\ttfamily \#include $<$fsl\+\_\+lpsci.\+h$>$}\newline
+{\ttfamily \#include $<$pin\+\_\+mux.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{definitions_8h_a748e69d615c835d8d9ae5f98af570532}\label{definitions_8h_a748e69d615c835d8d9ae5f98af570532}} 
+\#define {\bfseries D\+E\+M\+O\+\_\+\+L\+P\+S\+CI}~U\+A\+R\+T0
+\item 
+\mbox{\Hypertarget{definitions_8h_a0b3afd1134e408b124f3eda7abae56c4}\label{definitions_8h_a0b3afd1134e408b124f3eda7abae56c4}} 
+\#define {\bfseries D\+E\+M\+O\+\_\+\+L\+P\+S\+C\+I\+\_\+\+C\+L\+K\+S\+RC}~k\+C\+L\+O\+C\+K\+\_\+\+Core\+Sys\+Clk
+\item 
+\mbox{\Hypertarget{definitions_8h_a17ab487c275d39174ea8931961bdbb5d}\label{definitions_8h_a17ab487c275d39174ea8931961bdbb5d}} 
+\#define {\bfseries D\+E\+M\+O\+\_\+\+L\+P\+S\+C\+I\+\_\+\+C\+L\+K\+\_\+\+F\+R\+EQ}~C\+L\+O\+C\+K\+\_\+\+Get\+Freq(k\+C\+L\+O\+C\+K\+\_\+\+Core\+Sys\+Clk)
+\item 
+\mbox{\Hypertarget{definitions_8h_a7055dad0bec420e4f5001d107f53ca5d}\label{definitions_8h_a7055dad0bec420e4f5001d107f53ca5d}} 
+\#define {\bfseries D\+E\+M\+O\+\_\+\+L\+P\+S\+C\+I\+\_\+\+I\+R\+Qn}~U\+A\+R\+T0\+\_\+\+I\+R\+Qn
+\item 
+\mbox{\Hypertarget{definitions_8h_ac756bf9a6d777533e9e1b08c7f0abf29}\label{definitions_8h_ac756bf9a6d777533e9e1b08c7f0abf29}} 
+\#define {\bfseries D\+E\+M\+O\+\_\+\+L\+P\+S\+C\+I\+\_\+\+I\+R\+Q\+Handler}~U\+A\+R\+T0\+\_\+\+I\+R\+Q\+Handler
+\item 
+\mbox{\Hypertarget{definitions_8h_ad76d1750a6cdeebd506bfcd6752554d2}\label{definitions_8h_ad76d1750a6cdeebd506bfcd6752554d2}} 
+\#define {\bfseries ON}~0x01
+\item 
+\mbox{\Hypertarget{definitions_8h_a29e413f6725b2ba32d165ffaa35b01e5}\label{definitions_8h_a29e413f6725b2ba32d165ffaa35b01e5}} 
+\#define {\bfseries O\+FF}~0x00
+\item 
+\mbox{\Hypertarget{definitions_8h_a5ef0f42274f06308612e31501d6c0f8f}\label{definitions_8h_a5ef0f42274f06308612e31501d6c0f8f}} 
+\#define {\bfseries my\+Address}~0x00
+\item 
+\mbox{\Hypertarget{definitions_8h_a4740e3d8233c90ffd35d4e1f28ca4a4f}\label{definitions_8h_a4740e3d8233c90ffd35d4e1f28ca4a4f}} 
+\#define {\bfseries motor\+Address}~0xf1
+\item 
+\mbox{\Hypertarget{definitions_8h_a72c603ab063bb2f99f2509a712509420}\label{definitions_8h_a72c603ab063bb2f99f2509a712509420}} 
+\#define {\bfseries door\+Address}~0xf0
+\item 
+\mbox{\Hypertarget{definitions_8h_a7cb57189c778d5fa6b1debb97dd08f3c}\label{definitions_8h_a7cb57189c778d5fa6b1debb97dd08f3c}} 
+\#define {\bfseries display\+Address}~0x30
+\item 
+\mbox{\Hypertarget{definitions_8h_a9e8459ea9367fca594f592be4bd18620}\label{definitions_8h_a9e8459ea9367fca594f592be4bd18620}} 
+\#define {\bfseries data\+Message}~0xa0
+\item 
+\mbox{\Hypertarget{definitions_8h_abaa5d25b930e1a25acd9267134266494}\label{definitions_8h_abaa5d25b930e1a25acd9267134266494}} 
+\#define {\bfseries ack\+Message}~0xa1
+\item 
+\mbox{\Hypertarget{definitions_8h_ae5dc591ae4ffbc51832ed021d8763af5}\label{definitions_8h_ae5dc591ae4ffbc51832ed021d8763af5}} 
+\#define {\bfseries led0}~0x10
+\item 
+\mbox{\Hypertarget{definitions_8h_a9da09a9de0f5c3a2bf74dda6047df7b8}\label{definitions_8h_a9da09a9de0f5c3a2bf74dda6047df7b8}} 
+\#define {\bfseries led1}~0x11
+\item 
+\mbox{\Hypertarget{definitions_8h_a26c3855ae7d652a267115f013350425e}\label{definitions_8h_a26c3855ae7d652a267115f013350425e}} 
+\#define {\bfseries led2}~0x12
+\item 
+\mbox{\Hypertarget{definitions_8h_aea10715d722ff859ab1568692f9774cb}\label{definitions_8h_aea10715d722ff859ab1568692f9774cb}} 
+\#define {\bfseries led3}~0x13
+\item 
+\mbox{\Hypertarget{definitions_8h_a8903df83c862ebcaafb894333956b66c}\label{definitions_8h_a8903df83c862ebcaafb894333956b66c}} 
+\#define {\bfseries led4}~0x14
+\item 
+\mbox{\Hypertarget{definitions_8h_ab358117c34b529636d78ed0318fdb86c}\label{definitions_8h_ab358117c34b529636d78ed0318fdb86c}} 
+\#define {\bfseries led\+Cab0}~0x20
+\item 
+\mbox{\Hypertarget{definitions_8h_ab818e2d6287d10e6b9018936333c1661}\label{definitions_8h_ab818e2d6287d10e6b9018936333c1661}} 
+\#define {\bfseries led\+Cab1}~0x21
+\item 
+\mbox{\Hypertarget{definitions_8h_ad4fb12877a1eb6364a4b67dd505fde03}\label{definitions_8h_ad4fb12877a1eb6364a4b67dd505fde03}} 
+\#define {\bfseries led\+Cab2}~0x22
+\item 
+\mbox{\Hypertarget{definitions_8h_a9acef473c663e8ff1fdab376ebf79047}\label{definitions_8h_a9acef473c663e8ff1fdab376ebf79047}} 
+\#define {\bfseries led\+Cab3}~0x23
+\item 
+\mbox{\Hypertarget{definitions_8h_ab8a82c8c299ebd230b7ac6c1499a48a3}\label{definitions_8h_ab8a82c8c299ebd230b7ac6c1499a48a3}} 
+\#define {\bfseries led\+Cab4}~0x24
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Hlavičkový súbor s definovanými hodnotami. 
+

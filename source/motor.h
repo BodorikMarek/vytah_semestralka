@@ -5,6 +5,12 @@
  *      Author: bodor
  */
 
+/**
+ * @file    motor.h
+ * @brief   Hlavičkový súbor s funkciami pre motor.c
+ *
+ */
+
 #ifndef MOTOR_H_
 #define MOTOR_H_
 
@@ -16,7 +22,8 @@ extern bool isDoorClose, isMoving;
 
 void stopAndGoCabineProcedure();
 void stopCabineProcedure();
-void motorUp(void);
+void checkForStop(uint8_t floorForStop);
+void motorUp();
 void motorDown();
 void stopMotor();
 

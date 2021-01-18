@@ -1488,20 +1488,20 @@ OUTPUT(frdmkl25z_driver_examples_lpsci_interrupt_Vytah.axf elf32-littlearm)
  .debug_ranges  0x00000668       0x20 ./board/pin_mux.o
  .debug_ranges  0x00000688       0x18 ./CMSIS/system_MKL25Z4.o
 
-.debug_line     0x00000000     0x4623
+.debug_line     0x00000000     0x4627
  .debug_line    0x00000000      0x1e7 ./startup/startup_mkl25z4.o
  .debug_line    0x000001e7      0x252 ./source/door.o
  .debug_line    0x00000439      0x3d1 ./source/leds.o
- .debug_line    0x0000080a      0x613 ./source/main.o
- .debug_line    0x00000e1d      0x341 ./source/motor.o
- .debug_line    0x0000115e       0x30 ./source/mtb.o
- .debug_line    0x0000118e       0x59 ./source/semihost_hardfault.o
- .debug_line    0x000011e7     0x1253 ./drivers/fsl_clock.o
- .debug_line    0x0000243a      0xccf ./drivers/fsl_lpsci.o
- .debug_line    0x00003109      0xcbe ./drivers/fsl_uart.o
- .debug_line    0x00003dc7      0x32b ./board/clock_config.o
- .debug_line    0x000040f2      0x295 ./board/pin_mux.o
- .debug_line    0x00004387      0x29c ./CMSIS/system_MKL25Z4.o
+ .debug_line    0x0000080a      0x615 ./source/main.o
+ .debug_line    0x00000e1f      0x343 ./source/motor.o
+ .debug_line    0x00001162       0x30 ./source/mtb.o
+ .debug_line    0x00001192       0x59 ./source/semihost_hardfault.o
+ .debug_line    0x000011eb     0x1253 ./drivers/fsl_clock.o
+ .debug_line    0x0000243e      0xccf ./drivers/fsl_lpsci.o
+ .debug_line    0x0000310d      0xcbe ./drivers/fsl_uart.o
+ .debug_line    0x00003dcb      0x32b ./board/clock_config.o
+ .debug_line    0x000040f6      0x295 ./board/pin_mux.o
+ .debug_line    0x0000438b      0x29c ./CMSIS/system_MKL25Z4.o
 
 .debug_str      0x00000000     0x37d7
  .debug_str     0x00000000      0x4e7 ./startup/startup_mkl25z4.o

@@ -1,0 +1,86 @@
+\hypertarget{motor_8h}{}\doxysection{motor.\+h File Reference}
+\label{motor_8h}\index{motor.h@{motor.h}}
+
+
+Hlavičkový súbor s funkciami pre \mbox{\hyperlink{motor_8c}{motor.\+c}}.  
+
+
+{\ttfamily \#include $<$definitions.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{motor_8h_a559011a19d90f0658ed42d2fe77719fb}{stop\+And\+Go\+Cabine\+Procedure}} ()
+\item 
+void \mbox{\hyperlink{motor_8h_adfd20294ec90beb5bf41a4b567a3ac8a}{stop\+Cabine\+Procedure}} ()
+\item 
+void \mbox{\hyperlink{motor_8h_a0b455bac89bd1ffe125b38bcafd29734}{check\+For\+Stop}} (uint8\+\_\+t floor\+For\+Stop)
+\item 
+void \mbox{\hyperlink{motor_8h_a8725f7790a4be4b336ec83d6a0afd5a1}{motor\+Up}} ()
+\item 
+void \mbox{\hyperlink{motor_8h_ac1351ed7829cb29828151f0f09018e90}{motor\+Down}} ()
+\item 
+void \mbox{\hyperlink{motor_8h_ac485965697295992f2599633a3f5126a}{stop\+Motor}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{motor_8h_a474fd1ff8a7dfe0be95549311ac9b4a5}\label{motor_8h_a474fd1ff8a7dfe0be95549311ac9b4a5}} 
+volatile uint8\+\_\+t {\bfseries message} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\Hypertarget{motor_8h_ac6116d5235e13e059e591879c46d7174}\label{motor_8h_ac6116d5235e13e059e591879c46d7174}} 
+uint8\+\_\+t {\bfseries direction}
+\item 
+\mbox{\Hypertarget{motor_8h_ac790b6e42b45868bb42399d1ce4d7c6c}\label{motor_8h_ac790b6e42b45868bb42399d1ce4d7c6c}} 
+uint8\+\_\+t {\bfseries last\+Known\+Limit\+Switch}
+\item 
+\mbox{\Hypertarget{motor_8h_a736f582cf0cd323ede7314183c0a8019}\label{motor_8h_a736f582cf0cd323ede7314183c0a8019}} 
+bool {\bfseries is\+Door\+Close}
+\item 
+\mbox{\Hypertarget{motor_8h_a420415c6b665fb9669a388e0e96ceb02}\label{motor_8h_a420415c6b665fb9669a388e0e96ceb02}} 
+bool {\bfseries is\+Moving}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Hlavičkový súbor s funkciami pre \mbox{\hyperlink{motor_8c}{motor.\+c}}. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{motor_8h_a0b455bac89bd1ffe125b38bcafd29734}\label{motor_8h_a0b455bac89bd1ffe125b38bcafd29734}} 
+\index{motor.h@{motor.h}!checkForStop@{checkForStop}}
+\index{checkForStop@{checkForStop}!motor.h@{motor.h}}
+\doxysubsubsection{\texorpdfstring{checkForStop()}{checkForStop()}}
+{\footnotesize\ttfamily void check\+For\+Stop (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{floor\+For\+Stop }\end{DoxyParamCaption})}
+
+Funkcia, kontrolujúca či výťah má zastaviť na danom poschodí. \mbox{\Hypertarget{motor_8h_ac1351ed7829cb29828151f0f09018e90}\label{motor_8h_ac1351ed7829cb29828151f0f09018e90}} 
+\index{motor.h@{motor.h}!motorDown@{motorDown}}
+\index{motorDown@{motorDown}!motor.h@{motor.h}}
+\doxysubsubsection{\texorpdfstring{motorDown()}{motorDown()}}
+{\footnotesize\ttfamily void motor\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá pošle výťah s rýchlosťou 100 smerom dole. \mbox{\Hypertarget{motor_8h_a8725f7790a4be4b336ec83d6a0afd5a1}\label{motor_8h_a8725f7790a4be4b336ec83d6a0afd5a1}} 
+\index{motor.h@{motor.h}!motorUp@{motorUp}}
+\index{motorUp@{motorUp}!motor.h@{motor.h}}
+\doxysubsubsection{\texorpdfstring{motorUp()}{motorUp()}}
+{\footnotesize\ttfamily void motor\+Up (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá pošle výťah s rýchlosťou 100 smerom hore. \mbox{\Hypertarget{motor_8h_a559011a19d90f0658ed42d2fe77719fb}\label{motor_8h_a559011a19d90f0658ed42d2fe77719fb}} 
+\index{motor.h@{motor.h}!stopAndGoCabineProcedure@{stopAndGoCabineProcedure}}
+\index{stopAndGoCabineProcedure@{stopAndGoCabineProcedure}!motor.h@{motor.h}}
+\doxysubsubsection{\texorpdfstring{stopAndGoCabineProcedure()}{stopAndGoCabineProcedure()}}
+{\footnotesize\ttfamily void stop\+And\+Go\+Cabine\+Procedure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá v prípade, že je výťah zavolaný na viacero poschodí, tak zastaví a pohne sa v rovnakom smere v akom výťah prišiel na dané poschodie. \mbox{\Hypertarget{motor_8h_adfd20294ec90beb5bf41a4b567a3ac8a}\label{motor_8h_adfd20294ec90beb5bf41a4b567a3ac8a}} 
+\index{motor.h@{motor.h}!stopCabineProcedure@{stopCabineProcedure}}
+\index{stopCabineProcedure@{stopCabineProcedure}!motor.h@{motor.h}}
+\doxysubsubsection{\texorpdfstring{stopCabineProcedure()}{stopCabineProcedure()}}
+{\footnotesize\ttfamily void stop\+Cabine\+Procedure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá zastaví výťah na poslednom poschodí. \mbox{\Hypertarget{motor_8h_ac485965697295992f2599633a3f5126a}\label{motor_8h_ac485965697295992f2599633a3f5126a}} 
+\index{motor.h@{motor.h}!stopMotor@{stopMotor}}
+\index{stopMotor@{stopMotor}!motor.h@{motor.h}}
+\doxysubsubsection{\texorpdfstring{stopMotor()}{stopMotor()}}
+{\footnotesize\ttfamily void stop\+Motor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá zastaví výťah. 

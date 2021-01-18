@@ -1,0 +1,60 @@
+\hypertarget{leds_8c}{}\doxysection{leds.\+c File Reference}
+\label{leds_8c}\index{leds.c@{leds.c}}
+
+
+Ledky a buttony.  
+
+
+{\ttfamily \#include $<$leds.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{leds_8c_adce1d9ded8c4134b0573b7b4829ddf76}{led\+On\+Off}} (uint8\+\_\+t led, uint8\+\_\+t status)
+\item 
+void \mbox{\hyperlink{leds_8c_af2f0312a6ffb002982b3592a69f94d86}{min\+Floor\+Find}} ()
+\item 
+void \mbox{\hyperlink{leds_8c_ae9f4dcedd0d2856069460a5be73e8703}{floors\+And\+Leds\+False}} (uint8\+\_\+t floor)
+\item 
+void \mbox{\hyperlink{leds_8c_a52a7bc0eec47242eb3bc31c98438185f}{get\+Info\+From\+Buttons}} (uint8\+\_\+t button)
+\item 
+void \mbox{\hyperlink{leds_8c_a106611b91d70cc90475cd44ceecd1909}{send\+Floor\+To\+Display}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Ledky a buttony. 
+
+Trieda, ktorá slúži na obsluhu lediek vo výťahu ale tiež pre spracovanie informácií v prípade, že je stlačený button vo výťahu a taktiež za posielanie správ na display. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{leds_8c_ae9f4dcedd0d2856069460a5be73e8703}\label{leds_8c_ae9f4dcedd0d2856069460a5be73e8703}} 
+\index{leds.c@{leds.c}!floorsAndLedsFalse@{floorsAndLedsFalse}}
+\index{floorsAndLedsFalse@{floorsAndLedsFalse}!leds.c@{leds.c}}
+\doxysubsubsection{\texorpdfstring{floorsAndLedsFalse()}{floorsAndLedsFalse()}}
+{\footnotesize\ttfamily void floors\+And\+Leds\+False (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{floor }\end{DoxyParamCaption})}
+
+Funkcia, ktoráv prípade, že výťah zastaví na danom poschodí, zhasne ledku a odznačí príznak true z poschodia na ktorom zastavila. \mbox{\Hypertarget{leds_8c_a52a7bc0eec47242eb3bc31c98438185f}\label{leds_8c_a52a7bc0eec47242eb3bc31c98438185f}} 
+\index{leds.c@{leds.c}!getInfoFromButtons@{getInfoFromButtons}}
+\index{getInfoFromButtons@{getInfoFromButtons}!leds.c@{leds.c}}
+\doxysubsubsection{\texorpdfstring{getInfoFromButtons()}{getInfoFromButtons()}}
+{\footnotesize\ttfamily void get\+Info\+From\+Buttons (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{button }\end{DoxyParamCaption})}
+
+Funkcia, ktorá v prípade, že je vo výťahu stalačené tlačidlo pre privolanie výťahu, zasvieti jemu prisluchajúcu ledku a v poli floors nastaví príznak danému poschodiu na true. \mbox{\Hypertarget{leds_8c_adce1d9ded8c4134b0573b7b4829ddf76}\label{leds_8c_adce1d9ded8c4134b0573b7b4829ddf76}} 
+\index{leds.c@{leds.c}!ledOnOff@{ledOnOff}}
+\index{ledOnOff@{ledOnOff}!leds.c@{leds.c}}
+\doxysubsubsection{\texorpdfstring{ledOnOff()}{ledOnOff()}}
+{\footnotesize\ttfamily void led\+On\+Off (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{led,  }\item[{uint8\+\_\+t}]{status }\end{DoxyParamCaption})}
+
+Funkcia, posiela príkaz výťahu, ktorú ledku má zasvietiť/zhasnúť. \mbox{\Hypertarget{leds_8c_af2f0312a6ffb002982b3592a69f94d86}\label{leds_8c_af2f0312a6ffb002982b3592a69f94d86}} 
+\index{leds.c@{leds.c}!minFloorFind@{minFloorFind}}
+\index{minFloorFind@{minFloorFind}!leds.c@{leds.c}}
+\doxysubsubsection{\texorpdfstring{minFloorFind()}{minFloorFind()}}
+{\footnotesize\ttfamily void min\+Floor\+Find (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá, označí za cieľové poschodie najvyšie, respektíve najnižšie poschodie podľa smeru výťahu. \mbox{\Hypertarget{leds_8c_a106611b91d70cc90475cd44ceecd1909}\label{leds_8c_a106611b91d70cc90475cd44ceecd1909}} 
+\index{leds.c@{leds.c}!sendFloorToDisplay@{sendFloorToDisplay}}
+\index{sendFloorToDisplay@{sendFloorToDisplay}!leds.c@{leds.c}}
+\doxysubsubsection{\texorpdfstring{sendFloorToDisplay()}{sendFloorToDisplay()}}
+{\footnotesize\ttfamily void send\+Floor\+To\+Display (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá na display výťahu pošle aktuálne poschodie a smer výťahu. 

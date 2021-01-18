@@ -1,0 +1,72 @@
+\hypertarget{main_8c}{}\doxysection{main.\+c File Reference}
+\label{main_8c}\index{main.c@{main.c}}
+
+
+Hlavný spúšťací súbor.  
+
+
+{\ttfamily \#include \char`\"{}board.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$motor.\+h$>$}\newline
+{\ttfamily \#include $<$door.\+h$>$}\newline
+{\ttfamily \#include $<$leds.\+h$>$}\newline
+{\ttfamily \#include $<$definitions.\+h$>$}\newline
+{\ttfamily \#include $<$variables.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8c_a1b32411cb5eef5d5447981e6181f229d}{D\+E\+M\+O\+\_\+\+L\+P\+S\+C\+I\+\_\+\+I\+R\+Q\+Handler}} (void)
+\item 
+unsigned char \mbox{\hyperlink{main_8c_a4f2f1191cf065e3d4d1122a7928ce2e5}{crc8}} (const unsigned char $\ast$data, const unsigned int size)
+\item 
+void \mbox{\hyperlink{main_8c_ac0fed4fb18bece58c851f7d76f8ebe38}{delay}} (int millis)
+\item 
+void \mbox{\hyperlink{main_8c_a6f12429a421a672e842d483cce5e29c2}{send\+Ack}} (uint8\+\_\+t reciver\+Address)
+\item 
+void \mbox{\hyperlink{main_8c_ad86dcfaded318e11eec008ff23cd62b0}{process\+Message}} ()
+\item 
+\mbox{\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+int {\bfseries main} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Hlavný spúšťací súbor. 
+
+Hlavná trieda v ktorej sa nachádza handler na prerušenia, spracovanie správy, crc súčet, funkcia pre delay, odosielanie ack správy 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8c_a4f2f1191cf065e3d4d1122a7928ce2e5}\label{main_8c_a4f2f1191cf065e3d4d1122a7928ce2e5}} 
+\index{main.c@{main.c}!crc8@{crc8}}
+\index{crc8@{crc8}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{crc8()}{crc8()}}
+{\footnotesize\ttfamily unsigned char crc8 (\begin{DoxyParamCaption}\item[{const unsigned char $\ast$}]{data,  }\item[{const unsigned int}]{size }\end{DoxyParamCaption})}
+
+Funkcia pre výpočet crc hodnot.
+
+Zdroj\+: \href{https://stackoverflow.com/questions/51752284/how-to-calculate-crc8-in-c}{\texttt{ https\+://stackoverflow.\+com/questions/51752284/how-\/to-\/calculate-\/crc8-\/in-\/c}}
+
+Vstupný parameter $\ast$data predstavuje dáta z ktorých sa crc bude počítať a size ich veľkosť. \mbox{\Hypertarget{main_8c_ac0fed4fb18bece58c851f7d76f8ebe38}\label{main_8c_ac0fed4fb18bece58c851f7d76f8ebe38}} 
+\index{main.c@{main.c}!delay@{delay}}
+\index{delay@{delay}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{delay()}{delay()}}
+{\footnotesize\ttfamily void delay (\begin{DoxyParamCaption}\item[{int}]{millis }\end{DoxyParamCaption})}
+
+Funkcia vyvarajúca oneskorenie. \mbox{\Hypertarget{main_8c_a1b32411cb5eef5d5447981e6181f229d}\label{main_8c_a1b32411cb5eef5d5447981e6181f229d}} 
+\index{main.c@{main.c}!DEMO\_LPSCI\_IRQHandler@{DEMO\_LPSCI\_IRQHandler}}
+\index{DEMO\_LPSCI\_IRQHandler@{DEMO\_LPSCI\_IRQHandler}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{DEMO\_LPSCI\_IRQHandler()}{DEMO\_LPSCI\_IRQHandler()}}
+{\footnotesize\ttfamily void D\+E\+M\+O\+\_\+\+L\+P\+S\+C\+I\+\_\+\+I\+R\+Q\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Funkcia pre správu prerušení, každým vyvolaným prerušením sa príjme 1B správy, v prípade, že správa je kompletná, globálna premenná message\+Is\+Complete sa nastavý na true a ďalej sa spracuváva. \mbox{\Hypertarget{main_8c_ad86dcfaded318e11eec008ff23cd62b0}\label{main_8c_ad86dcfaded318e11eec008ff23cd62b0}} 
+\index{main.c@{main.c}!processMessage@{processMessage}}
+\index{processMessage@{processMessage}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{processMessage()}{processMessage()}}
+{\footnotesize\ttfamily void process\+Message (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funkcia, ktora spracuváva správu od výťahu, je to hlavná funkcia obsluhujúca výťah. \mbox{\Hypertarget{main_8c_a6f12429a421a672e842d483cce5e29c2}\label{main_8c_a6f12429a421a672e842d483cce5e29c2}} 
+\index{main.c@{main.c}!sendAck@{sendAck}}
+\index{sendAck@{sendAck}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{sendAck()}{sendAck()}}
+{\footnotesize\ttfamily void send\+Ack (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{reciver\+Address }\end{DoxyParamCaption})}
+
+Funkcia, ktorá posiela ack správy prijaté od výťahu. 

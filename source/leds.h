@@ -4,7 +4,11 @@
  *  Created on: 16. 1. 2021
  *      Author: bodor
  */
-
+/**
+ * @file    leds.h
+ * @brief   Hlavičkový súbor pre leds.c
+ *
+ */
 
 #ifndef LEDS_H_
 #define LEDS_H_

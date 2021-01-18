@@ -1,0 +1,68 @@
+\hypertarget{motor_8c}{}\doxysection{motor.\+c File Reference}
+\label{motor_8c}\index{motor.c@{motor.c}}
+
+
+Obsluha motorov.  
+
+
+{\ttfamily \#include $<$motor.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{motor_8c_a559011a19d90f0658ed42d2fe77719fb}{stop\+And\+Go\+Cabine\+Procedure}} ()
+\item 
+void \mbox{\hyperlink{motor_8c_adfd20294ec90beb5bf41a4b567a3ac8a}{stop\+Cabine\+Procedure}} ()
+\item 
+void \mbox{\hyperlink{motor_8c_a0b455bac89bd1ffe125b38bcafd29734}{check\+For\+Stop}} (uint8\+\_\+t floor\+For\+Stop)
+\item 
+void \mbox{\hyperlink{motor_8c_a1e43404e05048cd76cada88b0ca741e2}{motor\+Up}} (void)
+\item 
+void \mbox{\hyperlink{motor_8c_ac1351ed7829cb29828151f0f09018e90}{motor\+Down}} ()
+\item 
+void \mbox{\hyperlink{motor_8c_ac485965697295992f2599633a3f5126a}{stop\+Motor}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Obsluha motorov. 
+
+Trieda \mbox{\hyperlink{motor_8c}{motor.\+c}} je zodpovedná za správu motoru jeho zastavenie a následne znova zapnutie. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{motor_8c_a0b455bac89bd1ffe125b38bcafd29734}\label{motor_8c_a0b455bac89bd1ffe125b38bcafd29734}} 
+\index{motor.c@{motor.c}!checkForStop@{checkForStop}}
+\index{checkForStop@{checkForStop}!motor.c@{motor.c}}
+\doxysubsubsection{\texorpdfstring{checkForStop()}{checkForStop()}}
+{\footnotesize\ttfamily void check\+For\+Stop (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{floor\+For\+Stop }\end{DoxyParamCaption})}
+
+Funkcia, kontrolujúca či výťah má zastaviť na danom poschodí. \mbox{\Hypertarget{motor_8c_ac1351ed7829cb29828151f0f09018e90}\label{motor_8c_ac1351ed7829cb29828151f0f09018e90}} 
+\index{motor.c@{motor.c}!motorDown@{motorDown}}
+\index{motorDown@{motorDown}!motor.c@{motor.c}}
+\doxysubsubsection{\texorpdfstring{motorDown()}{motorDown()}}
+{\footnotesize\ttfamily void motor\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá pošle výťah s rýchlosťou 100 smerom dole. \mbox{\Hypertarget{motor_8c_a1e43404e05048cd76cada88b0ca741e2}\label{motor_8c_a1e43404e05048cd76cada88b0ca741e2}} 
+\index{motor.c@{motor.c}!motorUp@{motorUp}}
+\index{motorUp@{motorUp}!motor.c@{motor.c}}
+\doxysubsubsection{\texorpdfstring{motorUp()}{motorUp()}}
+{\footnotesize\ttfamily void motor\+Up (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá pošle výťah s rýchlosťou 100 smerom hore. \mbox{\Hypertarget{motor_8c_a559011a19d90f0658ed42d2fe77719fb}\label{motor_8c_a559011a19d90f0658ed42d2fe77719fb}} 
+\index{motor.c@{motor.c}!stopAndGoCabineProcedure@{stopAndGoCabineProcedure}}
+\index{stopAndGoCabineProcedure@{stopAndGoCabineProcedure}!motor.c@{motor.c}}
+\doxysubsubsection{\texorpdfstring{stopAndGoCabineProcedure()}{stopAndGoCabineProcedure()}}
+{\footnotesize\ttfamily void stop\+And\+Go\+Cabine\+Procedure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá v prípade, že je výťah zavolaný na viacero poschodí, tak zastaví a pohne sa v rovnakom smere v akom výťah prišiel na dané poschodie. \mbox{\Hypertarget{motor_8c_adfd20294ec90beb5bf41a4b567a3ac8a}\label{motor_8c_adfd20294ec90beb5bf41a4b567a3ac8a}} 
+\index{motor.c@{motor.c}!stopCabineProcedure@{stopCabineProcedure}}
+\index{stopCabineProcedure@{stopCabineProcedure}!motor.c@{motor.c}}
+\doxysubsubsection{\texorpdfstring{stopCabineProcedure()}{stopCabineProcedure()}}
+{\footnotesize\ttfamily void stop\+Cabine\+Procedure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá zastaví výťah na poslednom poschodí. \mbox{\Hypertarget{motor_8c_ac485965697295992f2599633a3f5126a}\label{motor_8c_ac485965697295992f2599633a3f5126a}} 
+\index{motor.c@{motor.c}!stopMotor@{stopMotor}}
+\index{stopMotor@{stopMotor}!motor.c@{motor.c}}
+\doxysubsubsection{\texorpdfstring{stopMotor()}{stopMotor()}}
+{\footnotesize\ttfamily void stop\+Motor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá zastaví výťah. 

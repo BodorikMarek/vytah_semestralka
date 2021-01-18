@@ -4,10 +4,20 @@
  *  Created on: 16. 1. 2021
  *      Author: bodor
  */
-
+/**
+ * @file    leds.c
+ * @brief   Ledky a buttony
+ *
+ * Trieda, ktorá slúži na obsluhu lediek vo výťahu ale tiež pre spracovanie informácií
+ * v prípade, že je stlačený button vo výťahu a taktiež za posielanie správ na display.
+ *
+ */
 #include <leds.h>
 
 
+/*!
+ * Funkcia, posiela príkaz výťahu, ktorú ledku má zasvietiť/zhasnúť.
+ */
 void ledOnOff(uint8_t led, uint8_t status) {
 	uint8_t crc[] = { led, 0x00, status };
 	uint8_t msg[] = { dataMessage, led, myAddress, 0x01, status, crc8(crc,
@@ -15,6 +25,10 @@ void ledOnOff(uint8_t led, uint8_t status) {
 	LPSCI_WriteBlocking(DEMO_LPSCI, msg, sizeof(msg));
 }
 
+/*!
+ * Funkcia, ktorá, označí za cieľové poschodie najvyšie, respektíve najnižšie
+ * poschodie podľa smeru výťahu.
+ */
 void minFloorFind() {
 	if (direction == 0x02) {
 		if (destinationSwitchTmp > destinationSwitch) {
@@ -35,6 +49,10 @@ void minFloorFind() {
 		destinationSwitch = destinationSwitchTmp;
 }
 
+/*!
+ * Funkcia, ktoráv prípade, že výťah zastaví na danom poschodí, zhasne ledku a odznačí príznak
+ * true z poschodia na ktorom zastavila.
+ */
 void floorsAndLedsFalse(uint8_t floor) {
 	if (floor == 0xe4) {
 		floors[4] = false;
@@ -78,6 +96,10 @@ void floorsAndLedsFalse(uint8_t floor) {
 
 }
 
+/*!
+ * Funkcia, ktorá v prípade, že je vo výťahu stalačené tlačidlo pre privolanie výťahu,
+ * zasvieti jemu prisluchajúcu ledku a v poli floors nastaví príznak danému poschodiu na true.
+ */
 void getInfoFromButtons(uint8_t button) {
 	switch (button) {
 	case 0xc4:
@@ -134,6 +156,9 @@ void getInfoFromButtons(uint8_t button) {
 
 }
 
+/*!
+ * Funkcia, ktorá na display výťahu pošle aktuálne poschodie a smer výťahu.
+ */
 void sendFloorToDisplay() {
 	uint8_t crc[] = { displayAddress, myAddress, direction, currentFloor };
 	uint8_t msg[] = { dataMessage, displayAddress, myAddress, 0x02, direction,

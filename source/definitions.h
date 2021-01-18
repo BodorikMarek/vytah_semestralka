@@ -5,6 +5,12 @@
  *      Author: bodor
  */
 
+/**
+ * @file    definitions.h
+ * @brief   Hlavičkový súbor s definovanými hodnotami.
+ *
+ */
+
 #include <fsl_lpsci.h>
 #include <pin_mux.h>
 #include <stdbool.h>
